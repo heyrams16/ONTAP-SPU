@@ -1,0 +1,113 @@
+/* ==========================================
+   Mobile Bottom Navigation - Meta Style
+   ========================================== */
+
+.mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #e4e6eb;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  z-index: 1001;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #65676b;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  flex: 1;
+  max-width: 80px;
+  position: relative;
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.95);
+}
+
+.mobile-nav-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+  transition: transform 0.2s ease;
+}
+
+.mobile-nav-label {
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Active State */
+.mobile-nav-item.active {
+  color: #1877F2;
+}
+
+.mobile-nav-item.active .mobile-nav-icon {
+  transform: scale(1.1);
+}
+
+.mobile-nav-item.active .mobile-nav-label {
+  font-weight: 600;
+}
+
+/* Active Indicator */
+.mobile-nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: #1877F2;
+  border-radius: 0 0 3px 3px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Tap Feedback */
+.mobile-nav-item:active {
+  background: #f0f2f5;
+}
+
+/* Safe Area for iPhone */
+@supports (padding: max(0px)) {
+  .mobile-nav {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Hide on desktop */
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* Adjust content padding on mobile to account for bottom nav */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 70px;
+  }
+}

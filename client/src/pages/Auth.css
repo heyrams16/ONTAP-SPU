@@ -1,0 +1,231 @@
+.auth-page {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-container {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.auth-form {
+  margin-bottom: 20px;
+}
+
+.auth-form small {
+  color: #666;
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.auth-footer {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Magic Link Styles */
+.auth-method-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  background: #f0f2f5;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.method-btn {
+  flex: 1;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #65676b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.method-btn.active {
+  background: white;
+  color: #1877F2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.method-btn:hover:not(.active) {
+  color: #1877F2;
+}
+
+.magic-link-info {
+  background: #e7f3ff;
+  border: 1px solid #1877F2;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.magic-link-info p {
+  margin: 0;
+  color: #1c1e21;
+  font-size: 14px;
+}
+
+.magic-link-sent {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.magic-link-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.magic-link-sent h3 {
+  color: #1c1e21;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.magic-link-sent p {
+  color: #65676b;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.magic-link-instructions {
+  background: #f0f2f5;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* Verify Magic Link Styles */
+.magic-link-verify {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.verify-spinner {
+  border: 4px solid #f0f2f5;
+  border-top: 4px solid #1877F2;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 30px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.verify-success-icon {
+  width: 80px;
+  height: 80px;
+  background: #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  font-size: 48px;
+  color: white;
+  animation: scaleIn 0.5s ease;
+}
+
+.verify-error-icon {
+  width: 80px;
+  height: 80px;
+  background: #f44336;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  font-size: 48px;
+  color: white;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.magic-link-verify h2 {
+  color: #1c1e21;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.magic-link-verify p {
+  color: #65676b;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 576px) {
+  .auth-container {
+    padding: 30px 20px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+  }
+
+  .method-btn {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

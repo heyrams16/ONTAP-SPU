@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONTAP-SPU Showcase - QR Code Poster</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .poster {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 56px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .award {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #2c3e50;
+            padding: 15px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        }
+
+        #qrcode {
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .instructions {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .url {
+            font-size: 32px;
+            color: #4CAF50;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .credentials {
+            background: #e3f2fd;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 6px solid #2196F3;
+        }
+
+        .credentials h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .credentials p {
+            font-size: 22px;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .credentials .password {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 28px;
+            color: #4CAF50;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .features {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .features h3 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 18px;
+        }
+
+        .feature-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px solid #ddd;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+
+        .footer strong {
+            color: #2c3e50;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .poster {
+                box-shadow: none;
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <h1>🎉 ONTAP-SPU</h1>
+        <p class="tagline">Campus Marketplace for Student Services</p>
+        <div class="award">🏆 Winner of HackSPU 2025</div>
+
+        <div class="instructions">📱 Scan QR Code to Access</div>
+        <div id="qrcode"></div>
+
+        <div class="url" id="urlDisplay">Loading...</div>
+
+        <div class="credentials">
+            <h2>🔐 Demo Login</h2>
+            <p><strong>Email:</strong> demo1@saintpeters.edu (to demo10)</p>
+            <p><strong>Password:</strong></p>
+            <div class="password">demo123</div>
+        </div>
+
+        <div class="features">
+            <h3>✨ Explore These Features</h3>
+            <div class="feature-list">
+                <div class="feature-item">🛍️ Browse 15+ Services</div>
+                <div class="feature-item">🎓 College Zone Profiles</div>
+                <div class="feature-item">📅 Book Services</div>
+                <div class="feature-item">➕ Create Listings</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Event:</strong> Saint Peters University Data Science Showcase</p>
+            <p><strong>Developer:</strong> Heyram Srinivasan</p>
+            <p><strong>Tech Stack:</strong> React • Node.js • Express • MongoDB</p>
+        </div>
+    </div>
+
+    <script>
+        // Get the current URL or use a default
+        const currentURL = window.location.origin || 'http://192.168.0.119:3000';
+
+        // Display the URL
+        document.getElementById('urlDisplay').textContent = currentURL;
+
+        // Generate QR Code
+        QRCode.toCanvas(
+            document.getElementById('qrcode'),
+            currentURL,
+            {
+                width: 350,
+                margin: 2,
+                color: {
+                    dark: '#2c3e50',
+                    light: '#ffffff'
+                }
+            }
+        );
+    </script>
+</body>
+</html>

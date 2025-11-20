@@ -1,0 +1,112 @@
+/* ==========================================
+   PWA Install Prompt - Meta Style
+   ========================================== */
+
+.install-prompt {
+  position: fixed;
+  bottom: calc(70px + env(safe-area-inset-bottom));
+  left: 16px;
+  right: 16px;
+  z-index: 1000;
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.install-prompt-content {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e4e6eb;
+}
+
+.install-prompt-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.install-prompt-text {
+  flex: 1;
+}
+
+.install-prompt-text h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1c1e21;
+}
+
+.install-prompt-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #65676b;
+}
+
+.install-prompt-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.install-btn {
+  padding: 8px 20px;
+  background: #1877F2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.install-btn:hover {
+  background: #166fe5;
+}
+
+.install-btn:active {
+  transform: scale(0.98);
+}
+
+.dismiss-btn {
+  background: #e4e6eb;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #65676b;
+  transition: all 0.2s ease;
+}
+
+.dismiss-btn:hover {
+  background: #d8dadf;
+}
+
+.dismiss-btn:active {
+  transform: scale(0.95);
+}
+
+/* Hide on desktop */
+@media (min-width: 769px) {
+  .install-prompt {
+    display: none;
+  }
+}

@@ -1,0 +1,172 @@
+.App {
+  min-height: 100vh;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 24px;
+  color: #666;
+}
+
+/* Common styles */
+.page {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.btn-secondary {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #0b7dda;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #da190b;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Add padding for mobile bottom navigation */
+  .App {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Adjust page padding for mobile */
+  .page {
+    padding: 20px 16px calc(70px + env(safe-area-inset-bottom));
+  }
+
+  /* Make buttons touch-friendly */
+  .btn {
+    padding: 14px 24px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+
+  /* Improve form inputs for mobile */
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 48px;
+  }
+
+  /* Card spacing for mobile */
+  .card {
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 768px) and (pointer: coarse) {
+  a, button, input[type="submit"], input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* PWA safe area adjustments */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    .page {
+      padding-bottom: max(70px, calc(70px + env(safe-area-inset-bottom)));
+    }
+  }
+}

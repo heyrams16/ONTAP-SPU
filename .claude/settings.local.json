@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(npm run server:*)",
+      "Bash(python3:*)",
+      "Bash(node server/seedRentals.js:*)",
+      "Bash(HOST=0.0.0.0 PORT=3000 npm start)",
+      "Bash(node seedDemoUsers.js:*)",
+      "Bash(node seedMarketplace.js:*)",
+      "Bash(node seedRentals.js:*)",
+      "Bash(node seedServices.js:*)",
+      "Bash(node:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

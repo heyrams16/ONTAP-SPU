@@ -1,0 +1,599 @@
+/* ==========================================
+   Wellness Coach - MindWave AI
+   ========================================== */
+
+.wellness-coach-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff9c4 100%);
+  padding: 80px 0 40px;
+}
+
+.wellness-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.wellness-header .header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.wellness-header h1 {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin: 0 0 10px;
+}
+
+.wellness-header .header-subtitle {
+  font-size: 1.1rem;
+  color: #558b2f;
+}
+
+/* Content Layout */
+.wellness-content {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.wellness-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-section {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-section h3 {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  color: #2e7d32;
+}
+
+.wellness-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
+  border-radius: 12px;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.stat-value.stress {
+  color: #f57c00;
+}
+
+/* Trend Chart */
+.trend-chart {
+  padding: 10px 0;
+}
+
+.trend-line {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100px;
+  gap: 6px;
+}
+
+.trend-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.bar-fill {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+  min-height: 10%;
+}
+
+.bar-label {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+/* Wellness Score Circle */
+.wellness-score-display {
+  text-align: center;
+}
+
+.score-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 12px;
+}
+
+.score-circle svg {
+  width: 100%;
+  height: 100%;
+}
+
+.score-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.score-description {
+  font-size: 0.95rem;
+  color: #558b2f;
+  margin: 0;
+}
+
+/* Main Content */
+.wellness-main {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.wellness-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+  overflow-x: auto;
+}
+
+.wellness-tabs .tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.wellness-tabs .tab-btn:hover {
+  color: #2e7d32;
+}
+
+.wellness-tabs .tab-btn.active {
+  color: #2e7d32;
+  border-bottom-color: #2e7d32;
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-content h2 {
+  font-size: 1.8rem;
+  color: #2e7d32;
+  margin: 0 0 24px;
+}
+
+/* Mood Check-in */
+.check-in-section h2 {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.mood-selector {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.mood-option {
+  width: 100px;
+  padding: 20px;
+  text-align: center;
+  border: 3px solid #e0e0e0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.mood-option:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mood-option.selected {
+  border-width: 3px;
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.2);
+  transform: scale(1.1);
+}
+
+.mood-emoji {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+.mood-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.check-in-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
+  border-radius: 16px;
+}
+
+.check-in-form .form-group {
+  margin-bottom: 24px;
+}
+
+.check-in-form label {
+  display: block;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 8px;
+}
+
+.check-in-form .slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #dcedc8;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.check-in-form .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2e7d32;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.check-in-form .slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2e7d32;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.check-in-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #c5e1a5;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.check-in-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.check-in-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
+
+/* Recommendations */
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.recommendation-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f5f5f5;
+  border-left: 4px solid #2e7d32;
+  transition: all 0.3s ease;
+}
+
+.recommendation-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.recommendation-card.urgent {
+  border-left-color: #f44336;
+  background: #ffebee;
+}
+
+.recommendation-card.suggestion {
+  border-left-color: #2196F3;
+  background: #e3f2fd;
+}
+
+.rec-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.rec-content h4 {
+  margin: 0 0 8px;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.rec-content p {
+  margin: 0 0 12px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.rec-action-btn {
+  padding: 8px 16px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.rec-action-btn:hover {
+  background: #1b5e20;
+}
+
+.insights-section {
+  margin-top: 30px;
+  padding: 24px;
+  background: #f9fbe7;
+  border-radius: 12px;
+  border-left: 4px solid #9ccc65;
+}
+
+.insights-section h3 {
+  margin: 0 0 16px;
+  color: #33691e;
+}
+
+.insight-box p {
+  margin: 12px 0;
+  color: #444;
+  font-size: 1rem;
+}
+
+/* Activities */
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.activity-card {
+  padding: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f8e9 100%);
+  border-radius: 16px;
+  border: 2px solid #c5e1a5;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.activity-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.15);
+}
+
+.activity-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.activity-card h4 {
+  margin: 0 0 8px;
+  color: #2e7d32;
+  font-size: 1.2rem;
+}
+
+.activity-card p {
+  margin: 0 0 16px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.activity-meta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.start-activity-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.start-activity-btn:hover {
+  transform: scale(1.05);
+}
+
+/* History */
+.history-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-entry {
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  border-left: 4px solid #66bb6a;
+}
+
+.entry-time {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.mood-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.entry-details {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.entry-notes {
+  margin-top: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  font-style: italic;
+  color: #555;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .wellness-content {
+    grid-template-columns: 1fr;
+  }
+
+  .wellness-sidebar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .wellness-coach-page {
+    padding: 60px 0 20px;
+  }
+
+  .wellness-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .wellness-main {
+    padding: 20px;
+  }
+
+  .mood-selector {
+    gap: 12px;
+  }
+
+  .mood-option {
+    width: 80px;
+    padding: 16px 12px;
+  }
+
+  .mood-emoji {
+    font-size: 2.5rem;
+  }
+
+  .wellness-tabs {
+    gap: 8px;
+  }
+
+  .wellness-tabs .tab-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .recommendations-grid,
+  .activities-grid {
+    grid-template-columns: 1fr;
+  }
+}

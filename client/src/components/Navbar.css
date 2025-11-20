@@ -1,0 +1,157 @@
+/* ==========================================
+   Navbar - Meta Style Design
+   ========================================== */
+
+.navbar {
+  background-color: #ffffff;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e4e6eb;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 56px;
+}
+
+.nav-logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1877F2;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  transition: opacity 0.2s ease;
+}
+
+.nav-logo:hover {
+  opacity: 0.8;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  color: #65676b;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  background-color: #f0f2f5;
+  color: #050505;
+}
+
+.nav-link:active {
+  background-color: #e4e6eb;
+}
+
+.nav-user {
+  color: #050505;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 16px;
+  background-color: #f0f2f5;
+  border-radius: 20px;
+}
+
+.nav-btn {
+  background-color: #1877F2;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.nav-btn:hover {
+  background-color: #166fe5;
+}
+
+.nav-btn:active {
+  transform: scale(0.98);
+}
+
+/* MindWave AI Special Link */
+.mindwave-link {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  font-weight: 700;
+  padding: 8px 16px !important;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mindwave-link:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.mindwave-link:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .nav-menu {
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 12px;
+  }
+
+  .nav-logo {
+    font-size: 22px;
+  }
+
+  /* Hide desktop menu on mobile */
+  .nav-menu {
+    display: none;
+  }
+
+  /* Adjust navbar for mobile with bottom nav */
+  .navbar {
+    height: 56px;
+  }
+
+  .nav-container {
+    height: 56px;
+  }
+}
