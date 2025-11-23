@@ -44,5 +44,5 @@ const HOST = '0.0.0.0'; // Listen on all network interfaces
 
 app.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
-  console.log(`API accessible from network at http://10.0.0.203:${PORT}/api`);
+  console.log(`API accessible from network at http://192.168.0.119:${PORT}/api`);
 });

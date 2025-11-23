@@ -23,6 +23,7 @@ import Showcase from './pages/Showcase';
 import Marketplace from './pages/Marketplace';
 import Rentals from './pages/Rentals';
 import RidePooling from './pages/RidePooling';
+import Rides from './pages/Rides';
 import OfferRide from './pages/OfferRide';
 import OnTapFeed from './pages/OnTapFeed';
 import StudentTools from './pages/StudentTools';
@@ -32,6 +33,7 @@ import MindWaveHub from './pages/MindWaveHub';
 import AIStudyAssistant from './pages/AIStudyAssistant';
 import SmartCampus from './pages/SmartCampus';
 import WellnessCoach from './pages/WellnessCoach';
+import AITranslator from './pages/AITranslator';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -95,6 +97,7 @@ function App() {
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/ride-pooling" element={<RidePooling />} />
+          <Route path="/rides" element={<Rides />} />
           <Route
             path="/rides/offer"
             element={user ? <OfferRide /> : <Navigate to="/login" />}
@@ -124,6 +127,7 @@ function App() {
           <Route path="/ai/tutor" element={<AIStudyAssistant />} />
           <Route path="/ai/smart-campus" element={<SmartCampus />} />
           <Route path="/ai/wellness" element={<WellnessCoach />} />
+          <Route path="/ai/translator" element={<AITranslator />} />
           <Route path="/ai/writing-assistant" element={<MindWaveHub />} />
           <Route path="/ai/schedule-optimizer" element={<MindWaveHub />} />
           <Route path="/ai/dashboard" element={<MindWaveHub />} />

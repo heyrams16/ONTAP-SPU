@@ -16,7 +16,7 @@ function NetworkAccess() {
       setShouldShow(true);
       // Use the detected IP address
       const port = window.location.port || '3000';
-      setNetworkUrl(`http://10.0.0.203:${port}`);
+      setNetworkUrl(`http://192.168.0.119:${port}`);
     }
   }, []);
 

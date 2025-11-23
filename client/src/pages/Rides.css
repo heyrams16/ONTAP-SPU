@@ -1,12 +1,12 @@
-/* Ride Pooling Page - Careem Style */
-.ride-pooling-page {
+/* Rides Page - Careem Style */
+.rides-page {
   min-height: 100vh;
   background: #0a0a0a;
   padding-bottom: 100px;
 }
 
 /* Header */
-.rp-header {
+.rides-header {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -17,7 +17,7 @@
   z-index: 100;
 }
 
-.rp-header .back-btn {
+.rides-header .back-btn {
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -31,26 +31,26 @@
   transition: all 0.2s ease;
 }
 
-.rp-header .back-btn:hover {
+.rides-header .back-btn:hover {
   background: rgba(255, 255, 255, 0.12);
   transform: translateX(-2px);
 }
 
-.rp-header .header-content h1 {
+.header-content h1 {
   font-size: 24px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
 }
 
-.rp-header .header-content p {
+.header-content p {
   font-size: 14px;
   color: #888888;
   margin: 4px 0 0 0;
 }
 
 /* Search Section */
-.rp-search-section {
+.rides-search-section {
   padding: 0 20px 20px;
 }
 
@@ -130,13 +130,13 @@
   font-weight: 600;
 }
 
-/* Content */
-.rp-content {
+/* Rides Content */
+.rides-content {
   padding: 0 20px;
 }
 
 /* Loading State */
-.rp-loading {
+.rides-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -457,19 +457,19 @@
 
 /* Responsive */
 @media (max-width: 480px) {
-  .rp-header {
+  .rides-header {
     padding: 16px;
   }
 
-  .rp-header .header-content h1 {
+  .header-content h1 {
     font-size: 20px;
   }
 
-  .rp-search-section {
+  .rides-search-section {
     padding: 0 16px 16px;
   }
 
-  .rp-content {
+  .rides-content {
     padding: 0 16px;
   }
 

@@ -1,6 +1,19 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Use relative URL for localhost (proxy), absolute URL for network/mobile access
+const getApiUrl = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return process.env.REACT_APP_API_URL;
+  }
+  // For network access (mobile), use the server's network IP
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return `http://${window.location.hostname}:5000/api`;
+  }
+  // For localhost, use proxy
+  return '/api';
+};
+
+const API_URL = getApiUrl();
 
 // Create axios instance with default config
 const api = axios.create({
@@ -47,6 +60,28 @@ export const bookingsAPI = {
   getById: (id) => api.get(`/bookings/${id}`),
   create: (data) => api.post('/bookings', data),
   updateStatus: (id, status) => api.patch(`/bookings/${id}/status`, { status }),
+};
+
+// Marketplace API
+export const marketplaceAPI = {
+  getAll: (params) => api.get('/marketplace', { params }),
+  getById: (id) => api.get(`/marketplace/${id}`),
+  create: (data) => api.post('/marketplace', data),
+};
+
+// Rentals API
+export const rentalsAPI = {
+  getAll: (params) => api.get('/rentals', { params }),
+  getById: (id) => api.get(`/rentals/${id}`),
+  create: (data) => api.post('/rentals', data),
+};
+
+// Rides API
+export const ridesAPI = {
+  getAll: (params) => api.get('/rides', { params }),
+  getById: (id) => api.get(`/rides/${id}`),
+  create: (data) => api.post('/rides', data),
+  join: (id) => api.post(`/rides/${id}/join`),
 };
 
 // Users API

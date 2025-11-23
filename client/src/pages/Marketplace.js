@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { servicesAPI } from '../services/api';
+import { Link, useNavigate } from 'react-router-dom';
+import { marketplaceAPI } from '../services/api';
 import './Marketplace.css';
 
 function Marketplace() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -21,8 +22,8 @@ function Marketplace() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await servicesAPI.getAll(filters);
-      setProducts(response.data.services);
+      const response = await marketplaceAPI.getAll(filters);
+      setProducts(response.data || []);
     } catch (error) {
       console.error('Error fetching marketplace products:', error);
     } finally {
@@ -39,13 +40,13 @@ function Marketplace() {
 
   const getConditionBadge = (condition) => {
     const badges = {
-      'new': { color: '#4CAF50', text: 'New' },
-      'like-new': { color: '#8BC34A', text: 'Like New' },
-      'good': { color: '#2196F3', text: 'Good' },
-      'fair': { color: '#FF9800', text: 'Fair' },
-      'poor': { color: '#f44336', text: 'Poor' }
+      'new': 'New',
+      'like-new': 'Like New',
+      'good': 'Good',
+      'fair': 'Fair',
+      'poor': 'Poor'
     };
-    return badges[condition] || { color: '#666', text: condition };
+    return badges[condition] || condition;
   };
 
   const getItemTypeIcon = (itemType) => {
@@ -61,108 +62,127 @@ function Marketplace() {
   };
 
   return (
-    <div className="service-list-page">
-      <div className="container">
-        <h1 className="page-title">🛒 Student Marketplace</h1>
-        <p className="page-subtitle">Buy and sell items within the campus community</p>
+    <div className="marketplace-page page">
+      {/* Header */}
+      <div className="marketplace-header">
+        <button className="back-btn" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+        <h1 className="page-title">Marketplace</h1>
+        <p className="text-secondary">Buy and sell items on campus</p>
+      </div>
 
-        <div className="filters-bar">
-          <div className="filter-group">
-            <input
-              type="text"
-              name="search"
-              placeholder="Search products..."
-              value={filters.search}
-              onChange={handleFilterChange}
-              className="search-input"
-            />
-          </div>
-
-          <div className="filter-group">
-            <select name="itemType" value={filters.itemType} onChange={handleFilterChange}>
-              <option value="">All Items</option>
-              <option value="textbook">Textbooks</option>
-              <option value="electronics">Electronics</option>
-              <option value="furniture">Furniture</option>
-              <option value="clothing">Clothing</option>
-              <option value="supplies">Supplies</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <select name="condition" value={filters.condition} onChange={handleFilterChange}>
-              <option value="">Any Condition</option>
-              <option value="new">New</option>
-              <option value="like-new">Like New</option>
-              <option value="good">Good</option>
-              <option value="fair">Fair</option>
-              <option value="poor">Poor</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <select name="sort" value={filters.sort} onChange={handleFilterChange}>
-              <option value="createdAt">Newest First</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-            </select>
-          </div>
+      {/* Filters */}
+      <div className="marketplace-filters">
+        <div className="input-icon">
+          <span className="input-icon-left">🔍</span>
+          <input
+            type="text"
+            name="search"
+            placeholder="Search products..."
+            value={filters.search}
+            onChange={handleFilterChange}
+            className="input"
+          />
         </div>
 
-        {loading ? (
-          <div className="loading-message">Loading products...</div>
-        ) : products.length === 0 ? (
-          <div className="no-results">
-            <p>No products found. Be the first to list an item!</p>
-          </div>
-        ) : (
-          <div className="services-grid">
-            {products.map(product => {
-              const conditionBadge = getConditionBadge(product.condition);
-              return (
-                <Link
-                  key={product._id}
-                  to={`/services/${product._id}`}
-                  className="service-card"
-                >
-                  <div className="service-header">
-                    <span className="service-category" style={{ backgroundColor: '#E91E63' }}>
-                      {getItemTypeIcon(product.itemType)} {product.itemType}
-                    </span>
-                    <span
-                      className="service-rating"
-                      style={{ backgroundColor: conditionBadge.color }}
-                    >
-                      {conditionBadge.text}
-                    </span>
-                  </div>
+        <div className="filter-chips">
+          <select
+            name="itemType"
+            value={filters.itemType}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="">All Items</option>
+            <option value="textbook">Textbooks</option>
+            <option value="electronics">Electronics</option>
+            <option value="furniture">Furniture</option>
+            <option value="clothing">Clothing</option>
+            <option value="supplies">Supplies</option>
+            <option value="other">Other</option>
+          </select>
 
-                  <h3 className="service-title">{product.title}</h3>
-                  <p className="service-description">{product.description}</p>
+          <select
+            name="condition"
+            value={filters.condition}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="">Any Condition</option>
+            <option value="new">New</option>
+            <option value="like-new">Like New</option>
+            <option value="good">Good</option>
+            <option value="fair">Fair</option>
+          </select>
 
-                  <div className="service-info">
-                    <div className="service-provider">
-                      Seller: {product.provider.name}
-                    </div>
-                    <div className="service-location">
-                      📍 {product.location}
-                    </div>
-                  </div>
-
-                  <div className="service-footer">
-                    <div className="service-price">
-                      ${product.price}
-                      {product.priceType === 'negotiable' && ' (OBO)'}
-                    </div>
-                    <button className="btn btn-secondary">View Details</button>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+          <select
+            name="sort"
+            value={filters.sort}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="createdAt">Newest</option>
+            <option value="price-low">Price: Low</option>
+            <option value="price-high">Price: High</option>
+          </select>
+        </div>
       </div>
+
+      {/* Products Grid */}
+      {loading ? (
+        <div className="empty-state">
+          <div className="empty-state-icon animate-pulse">🛍️</div>
+          <p className="text-secondary">Loading products...</p>
+        </div>
+      ) : products.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-icon">📦</div>
+          <h3 className="empty-state-title">No products found</h3>
+          <p className="empty-state-text">Be the first to list an item!</p>
+        </div>
+      ) : (
+        <div className="products-grid">
+          {products.map(product => (
+            <Link
+              key={product._id}
+              to={`/services/${product._id}`}
+              className="product-card card"
+            >
+              <div className="product-header">
+                <span className="product-type">
+                  {getItemTypeIcon(product.itemType)} {product.itemType}
+                </span>
+                <span className="badge badge-green">
+                  {getConditionBadge(product.condition)}
+                </span>
+              </div>
+
+              <h3 className="product-title">{product.title}</h3>
+              <p className="product-description text-secondary text-sm">
+                {product.description?.substring(0, 80)}...
+              </p>
+
+              <div className="product-meta">
+                <span className="text-tertiary text-sm">
+                  📍 {product.location}
+                </span>
+              </div>
+
+              <div className="product-footer">
+                <div className="product-price">
+                  ${product.price}
+                  {product.priceType === 'negotiable' && (
+                    <span className="negotiable">OBO</span>
+                  )}
+                </div>
+                <span className="product-seller text-sm">
+                  {product.provider?.name || 'Student'}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './WellnessCoach.css';
 import mockAIService from '../services/mockAIService';
+import axios from 'axios';
 
 function WellnessCoach() {
   const [currentMood, setCurrentMood] = useState(null);
   const [moodHistory, setMoodHistory] = useState([]);
   const [wellnessData, setWellnessData] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
-  const [activeTab, setActiveTab] = useState('mood');
+  const [activeTab, setActiveTab] = useState('chat');
   const [checkInForm, setCheckInForm] = useState({
     mood: '',
     energy: 5,
@@ -15,6 +16,95 @@ function WellnessCoach() {
     sleep: 7,
     notes: ''
   });
+
+  // Chat state
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: "Hello! I'm your AI Wellness Coach. I'm here to support your mental health and well-being. How are you feeling today? You can talk to me about stress, anxiety, sleep issues, or anything else on your mind. Everything shared here is private and confidential."
+    }
+  ]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const sendMessage = async () => {
+    if (!inputMessage.trim()) return;
+
+    const userMessage = { role: 'user', content: inputMessage };
+    setMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
+    setIsTyping(true);
+
+    try {
+      // Use the AI endpoint with wellness context
+      const response = await axios.post('/api/ai/wellness-chat', {
+        message: inputMessage,
+        context: 'wellness'
+      });
+
+      const assistantMessage = {
+        role: 'assistant',
+        content: response.data.response || getWellnessResponse(inputMessage)
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      // Fallback to local responses
+      const assistantMessage = {
+        role: 'assistant',
+        content: getWellnessResponse(inputMessage)
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const getWellnessResponse = (message) => {
+    const lower = message.toLowerCase();
+
+    if (lower.includes('stress') || lower.includes('anxious') || lower.includes('anxiety')) {
+      return "I hear that you're feeling stressed. That's completely valid, and I'm here to help. Here are some techniques that might help:\n\n**Immediate Relief:**\n• Try the 4-7-8 breathing technique: breathe in for 4 seconds, hold for 7, exhale for 8\n• Ground yourself by naming 5 things you can see, 4 you can touch, 3 you can hear\n\n**Longer-term strategies:**\n• Break tasks into smaller, manageable pieces\n• Set boundaries and learn to say no\n• Schedule regular breaks throughout your day\n\nWould you like to try a guided breathing exercise right now?";
+    }
+
+    if (lower.includes('sleep') || lower.includes('insomnia') || lower.includes('tired')) {
+      return "Sleep issues are really common among students. Here are some evidence-based strategies:\n\n**Sleep Hygiene Tips:**\n• Maintain a consistent sleep schedule, even on weekends\n• Avoid screens 1 hour before bed (blue light blocks melatonin)\n• Keep your room cool (65-68°F is ideal)\n• Limit caffeine after 2 PM\n\n**Relaxation Techniques:**\n• Progressive muscle relaxation\n• Body scan meditation\n• White noise or sleep sounds\n\nHow many hours of sleep are you currently getting?";
+    }
+
+    if (lower.includes('sad') || lower.includes('depressed') || lower.includes('down')) {
+      return "I'm sorry you're feeling down. Your feelings are valid and it takes courage to reach out. Here are some things that might help:\n\n**Immediate Steps:**\n• Reach out to a friend or family member\n• Try to get outside for some sunlight and fresh air\n• Do one small task to create a sense of accomplishment\n\n**Self-Care Ideas:**\n• Listen to music that makes you feel good\n• Practice gratitude by noting 3 good things from today\n• Be gentle with yourself - you're doing your best\n\n**Important:** If you're having thoughts of self-harm, please contact:\n• National Suicide Prevention Lifeline: 988\n• Crisis Text Line: Text HOME to 741741\n• Campus counseling services\n\nIs there something specific that's contributing to how you feel?";
+    }
+
+    if (lower.includes('overwhelm') || lower.includes('too much') || lower.includes('can\'t handle')) {
+      return "Feeling overwhelmed is really challenging. Let's break this down together:\n\n**Right Now:**\n• Take a deep breath - you're going to be okay\n• Write down everything on your mind (brain dump)\n• Identify the ONE most urgent thing\n\n**Prioritization Strategy:**\n1. What's due in the next 24 hours?\n2. What can be delegated or asked for an extension?\n3. What can wait until next week?\n\n**Self-Compassion:**\n• You don't have to be perfect\n• It's okay to ask for help\n• One step at a time is still progress\n\nWhat's the biggest thing weighing on you right now?";
+    }
+
+    if (lower.includes('lonely') || lower.includes('alone') || lower.includes('isolated')) {
+      return "Feeling lonely is painful, and it's more common than you might think. Here are some ways to connect:\n\n**On Campus:**\n• Join a club or student organization\n• Study groups in the library\n• Campus events and activities\n• Fitness classes or intramural sports\n\n**Online:**\n• Reach out to old friends\n• Join online communities around your interests\n• Video call family\n\n**Small Steps:**\n• Say hi to someone in class\n• Ask a classmate about homework\n• Sit in common areas instead of alone\n\nWould you like some suggestions for campus events or groups to join?";
+    }
+
+    if (lower.includes('thank') || lower.includes('better') || lower.includes('helped')) {
+      return "I'm so glad I could help! Remember, taking care of your mental health is just as important as your physical health. Feel free to come back anytime you need support. You're doing great! 💚";
+    }
+
+    return "Thank you for sharing that with me. I'm here to listen and support you. Can you tell me more about what you're experiencing? Are you feeling stressed, anxious, having trouble sleeping, or dealing with something else? The more you share, the better I can help you find strategies that work for you.";
+  };
+
+  const quickPrompts = [
+    "I'm feeling stressed about exams",
+    "I can't sleep well",
+    "I'm feeling overwhelmed",
+    "How can I manage anxiety?",
+    "I need motivation"
+  ];
 
   const moods = [
     { id: 'great', emoji: '😄', label: 'Great', color: '#4CAF50' },
@@ -194,16 +284,22 @@ function WellnessCoach() {
             {/* Tabs */}
             <div className="wellness-tabs">
               <button
+                className={`tab-btn ${activeTab === 'chat' ? 'active' : ''}`}
+                onClick={() => setActiveTab('chat')}
+              >
+                💬 Chat
+              </button>
+              <button
                 className={`tab-btn ${activeTab === 'mood' ? 'active' : ''}`}
                 onClick={() => setActiveTab('mood')}
               >
-                😊 Mood Check-in
+                😊 Check-in
               </button>
               <button
                 className={`tab-btn ${activeTab === 'insights' ? 'active' : ''}`}
                 onClick={() => setActiveTab('insights')}
               >
-                💡 AI Insights
+                💡 Insights
               </button>
               <button
                 className={`tab-btn ${activeTab === 'activities' ? 'active' : ''}`}
@@ -211,13 +307,70 @@ function WellnessCoach() {
               >
                 🎯 Activities
               </button>
-              <button
-                className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
-                onClick={() => setActiveTab('history')}
-              >
-                📊 History
-              </button>
             </div>
+
+            {/* Chat Tab */}
+            {activeTab === 'chat' && (
+              <div className="tab-content chat-tab">
+                <div className="chat-container">
+                  <div className="chat-messages">
+                    {messages.map((msg, idx) => (
+                      <div key={idx} className={`chat-message ${msg.role}`}>
+                        {msg.role === 'assistant' && (
+                          <div className="message-avatar">🧘</div>
+                        )}
+                        <div className="message-content">
+                          <p>{msg.content}</p>
+                        </div>
+                      </div>
+                    ))}
+                    {isTyping && (
+                      <div className="chat-message assistant">
+                        <div className="message-avatar">🧘</div>
+                        <div className="message-content typing">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                  </div>
+
+                  <div className="quick-prompts">
+                    {quickPrompts.map((prompt, idx) => (
+                      <button
+                        key={idx}
+                        className="quick-prompt-btn"
+                        onClick={() => {
+                          setInputMessage(prompt);
+                        }}
+                      >
+                        {prompt}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="chat-input-container">
+                    <input
+                      type="text"
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                      placeholder="Share what's on your mind..."
+                      className="chat-input"
+                    />
+                    <button
+                      onClick={sendMessage}
+                      disabled={!inputMessage.trim() || isTyping}
+                      className="send-btn"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Mood Check-in Tab */}
             {activeTab === 'mood' && (

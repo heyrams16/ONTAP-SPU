@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { servicesAPI } from '../services/api';
+import { Link, useNavigate } from 'react-router-dom';
+import { rentalsAPI } from '../services/api';
 import './Rentals.css';
 
 function Rentals() {
+  const navigate = useNavigate();
   const [rentals, setRentals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -21,8 +22,8 @@ function Rentals() {
   const fetchRentals = async () => {
     try {
       setLoading(true);
-      const response = await servicesAPI.getAll(filters);
-      setRentals(response.data.services);
+      const response = await rentalsAPI.getAll(filters);
+      setRentals(response.data || []);
     } catch (error) {
       console.error('Error fetching rentals:', error);
     } finally {
@@ -37,27 +38,6 @@ function Rentals() {
     });
   };
 
-  const getRentalPeriodBadge = (period) => {
-    const badges = {
-      'hourly': { color: '#FF6B6B', text: 'Hourly' },
-      'daily': { color: '#4ECDC4', text: 'Daily' },
-      'weekly': { color: '#45B7D1', text: 'Weekly' },
-      'monthly': { color: '#96CEB4', text: 'Monthly' },
-      'semester': { color: '#FFEAA7', text: 'Semester' }
-    };
-    return badges[period] || { color: '#666', text: period };
-  };
-
-  const getConditionBadge = (condition) => {
-    const badges = {
-      'new': { color: '#4CAF50', text: 'New' },
-      'like-new': { color: '#8BC34A', text: 'Like New' },
-      'good': { color: '#2196F3', text: 'Good' },
-      'fair': { color: '#FF9800', text: 'Fair' }
-    };
-    return badges[condition] || { color: '#666', text: condition };
-  };
-
   const getItemTypeIcon = (itemType) => {
     const icons = {
       'textbook': '📚',
@@ -65,130 +45,136 @@ function Rentals() {
       'equipment': '🔧',
       'furniture': '🪑',
       'vehicle': '🚗',
-      'other': '🔑'
+      'other': '📦'
     };
-    return icons[itemType] || '🔑';
+    return icons[itemType] || '📦';
   };
 
   return (
-    <div className="service-list-page">
-      <div className="container">
-        <h1 className="page-title">🔑 Campus Rentals</h1>
-        <p className="page-subtitle">Rent items from fellow students - save money and reduce waste!</p>
+    <div className="rentals-page page">
+      {/* Header */}
+      <div className="rentals-header">
+        <button className="back-btn" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+        <h1 className="page-title">Rentals</h1>
+        <p className="text-secondary">Borrow items from fellow students</p>
+      </div>
 
-        <div className="filters-bar">
-          <div className="filter-group">
-            <input
-              type="text"
-              name="search"
-              placeholder="Search rentals..."
-              value={filters.search}
-              onChange={handleFilterChange}
-              className="search-input"
-            />
-          </div>
-
-          <div className="filter-group">
-            <select name="rentalItemType" value={filters.rentalItemType} onChange={handleFilterChange}>
-              <option value="">All Items</option>
-              <option value="textbook">Textbooks</option>
-              <option value="electronics">Electronics</option>
-              <option value="equipment">Equipment</option>
-              <option value="furniture">Furniture</option>
-              <option value="vehicle">Vehicles</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <select name="rentalPeriod" value={filters.rentalPeriod} onChange={handleFilterChange}>
-              <option value="">All Periods</option>
-              <option value="hourly">Hourly</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="semester">Semester</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <select name="sort" value={filters.sort} onChange={handleFilterChange}>
-              <option value="createdAt">Newest First</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-            </select>
-          </div>
+      {/* Filters */}
+      <div className="rentals-filters">
+        <div className="input-icon">
+          <span className="input-icon-left">🔍</span>
+          <input
+            type="text"
+            name="search"
+            placeholder="Search rentals..."
+            value={filters.search}
+            onChange={handleFilterChange}
+            className="input"
+          />
         </div>
 
-        {loading ? (
-          <div className="loading-message">Loading rentals...</div>
-        ) : rentals.length === 0 ? (
-          <div className="no-results">
-            <p>No rentals found. Be the first to list an item for rent!</p>
-          </div>
-        ) : (
-          <div className="services-grid">
-            {rentals.map(rental => {
-              const periodBadge = getRentalPeriodBadge(rental.rentalPeriod);
-              const conditionBadge = getConditionBadge(rental.rentalCondition);
-              return (
-                <Link
-                  key={rental._id}
-                  to={`/services/${rental._id}`}
-                  className="service-card"
-                >
-                  <div className="service-header">
-                    <span className="service-category" style={{ backgroundColor: '#00BCD4' }}>
-                      {getItemTypeIcon(rental.rentalItemType)} {rental.rentalItemType}
-                    </span>
-                    <span
-                      className="service-rating"
-                      style={{ backgroundColor: periodBadge.color }}
-                    >
-                      {periodBadge.text}
-                    </span>
-                  </div>
+        <div className="filter-chips">
+          <select
+            name="rentalItemType"
+            value={filters.rentalItemType}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="">All Items</option>
+            <option value="textbook">Textbooks</option>
+            <option value="electronics">Electronics</option>
+            <option value="equipment">Equipment</option>
+            <option value="furniture">Furniture</option>
+            <option value="vehicle">Vehicles</option>
+          </select>
 
-                  <h3 className="service-title">{rental.title}</h3>
-                  <p className="service-description">{rental.description}</p>
+          <select
+            name="rentalPeriod"
+            value={filters.rentalPeriod}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="">All Periods</option>
+            <option value="hourly">Hourly</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="semester">Semester</option>
+          </select>
 
-                  <div className="service-info">
-                    <div className="service-provider">
-                      Owner: {rental.provider.name}
-                    </div>
-                    <div className="service-location">
-                      📍 {rental.location}
-                    </div>
-                    <div className="service-meta">
-                      <span
-                        style={{
-                          backgroundColor: conditionBadge.color,
-                          color: 'white',
-                          padding: '2px 8px',
-                          borderRadius: '4px',
-                          fontSize: '0.85em'
-                        }}
-                      >
-                        {conditionBadge.text}
-                      </span>
-                      <span style={{ marginLeft: '10px', fontSize: '0.9em', color: '#666' }}>
-                        💰 ${rental.deposit} deposit
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="service-footer">
-                    <div className="service-price">
-                      ${rental.price}/{rental.rentalPeriod}
-                    </div>
-                    <button className="btn btn-secondary">View Details</button>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+          <select
+            name="sort"
+            value={filters.sort}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="createdAt">Newest</option>
+            <option value="price-low">Price: Low</option>
+            <option value="price-high">Price: High</option>
+          </select>
+        </div>
       </div>
+
+      {/* Rentals Grid */}
+      {loading ? (
+        <div className="empty-state">
+          <div className="empty-state-icon animate-pulse">📦</div>
+          <p className="text-secondary">Loading rentals...</p>
+        </div>
+      ) : rentals.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-icon">🔑</div>
+          <h3 className="empty-state-title">No rentals found</h3>
+          <p className="empty-state-text">Be the first to list an item for rent!</p>
+        </div>
+      ) : (
+        <div className="rentals-grid">
+          {rentals.map(rental => (
+            <Link
+              key={rental._id}
+              to={`/services/${rental._id}`}
+              className="rental-card card"
+            >
+              <div className="rental-header">
+                <span className="rental-type">
+                  {getItemTypeIcon(rental.rentalItemType)} {rental.rentalItemType}
+                </span>
+                <span className="badge badge-green">
+                  {rental.rentalPeriod}
+                </span>
+              </div>
+
+              <h3 className="rental-title">{rental.title}</h3>
+              <p className="rental-description text-secondary text-sm">
+                {rental.description?.substring(0, 80)}...
+              </p>
+
+              <div className="rental-meta">
+                <span className="text-tertiary text-sm">
+                  📍 {rental.location}
+                </span>
+                {rental.deposit && (
+                  <span className="rental-deposit text-sm">
+                    ${rental.deposit} deposit
+                  </span>
+                )}
+              </div>
+
+              <div className="rental-footer">
+                <div className="rental-price">
+                  ${rental.price}
+                  <span className="rental-period">/{rental.rentalPeriod}</span>
+                </div>
+                <span className="rental-owner text-sm">
+                  {rental.provider?.name || 'Student'}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

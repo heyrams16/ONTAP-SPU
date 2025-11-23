@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ridesAPI } from '../services/api';
-import './RidePooling.css';
+import './Rides.css';
 
-function RidePooling() {
+function Rides() {
   const navigate = useNavigate();
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,9 +70,9 @@ function RidePooling() {
   };
 
   return (
-    <div className="ride-pooling-page">
+    <div className="rides-page">
       {/* Header */}
-      <div className="rp-header">
+      <div className="rides-header">
         <button className="back-btn" onClick={() => navigate(-1)}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -85,7 +85,7 @@ function RidePooling() {
       </div>
 
       {/* Search Section */}
-      <div className="rp-search-section">
+      <div className="rides-search-section">
         <div className="search-container">
           <div className="search-input-wrapper">
             <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -133,9 +133,9 @@ function RidePooling() {
       </div>
 
       {/* Rides List */}
-      <div className="rp-content">
+      <div className="rides-content">
         {loading ? (
-          <div className="rp-loading">
+          <div className="rides-loading">
             <div className="loading-spinner"></div>
             <p>Finding rides...</p>
           </div>
@@ -148,7 +148,7 @@ function RidePooling() {
             </div>
             <h3>No rides available</h3>
             <p>Check back later or post your own ride</p>
-            <button className="post-ride-btn" onClick={() => navigate('/rides/offer')}>
+            <button className="post-ride-btn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
@@ -238,7 +238,7 @@ function RidePooling() {
       </div>
 
       {/* Floating Action Button */}
-      <button className="fab-button" onClick={() => navigate('/rides/offer')}>
+      <button className="fab-button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
         </svg>
@@ -247,4 +247,4 @@ function RidePooling() {
   );
 }
 
-export default RidePooling;
+export default Rides;

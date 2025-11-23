@@ -1,12 +1,72 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Service = require('../models/Service');
 const RouteMatcher = require('../utils/routeMatcher');
 const authMiddleware = require('../middleware/auth');
 
+// Ride Schema for seeded data
+const rideSchema = new mongoose.Schema({
+  driver: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  origin: { type: String, required: true },
+  destination: { type: String, required: true },
+  departureTime: { type: Date, required: true },
+  seats: { type: Number, required: true },
+  price: { type: Number, required: true },
+  description: String,
+  status: { type: String, enum: ['active', 'full', 'completed', 'cancelled'], default: 'active' },
+  passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+}, { timestamps: true });
+
+const Ride = mongoose.models.Ride || mongoose.model('Ride', rideSchema);
+
 /**
  * Rides/Carpooling API Routes (Via style with waypoints)
  */
+
+// Get all seeded rides (simple list view)
+router.get('/', async (req, res) => {
+  try {
+    const { search, destination, sort } = req.query;
+
+    let query = {};
+
+    // Search filter
+    if (search) {
+      query.$or = [
+        { origin: { $regex: search, $options: 'i' } },
+        { destination: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Destination type filter
+    if (destination === 'airport') {
+      query.destination = { $regex: 'airport|EWR|JFK|LGA', $options: 'i' };
+    } else if (destination === 'nyc') {
+      query.destination = { $regex: 'NYC|New York|Manhattan|Penn Station|Times Square', $options: 'i' };
+    } else if (destination === 'campus') {
+      query.destination = { $regex: 'SPU|Campus', $options: 'i' };
+    }
+
+    // Sort options
+    let sortOption = { departureTime: 1 };
+    if (sort === 'price-low') {
+      sortOption = { price: 1 };
+    } else if (sort === 'price-high') {
+      sortOption = { price: -1 };
+    }
+
+    const rides = await Ride.find(query)
+      .populate('driver', 'name email')
+      .sort(sortOption);
+
+    res.json(rides);
+  } catch (error) {
+    console.error('Error fetching rides:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // Search for matching rides (Via-style with zones and coordinates)
 router.get('/search', async (req, res) => {

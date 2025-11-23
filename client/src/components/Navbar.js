@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MobileMenu from './MobileMenu';
 import './Navbar.css';
 
 function Navbar({ user, onLogout }) {
@@ -8,50 +7,37 @@ function Navbar({ user, onLogout }) {
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="nav-logo">
-          ONTAP-SPU
+          <span className="logo-icon">O</span>
+          <span className="logo-text">ONTAP</span>
         </Link>
-        <MobileMenu user={user} onLogout={onLogout} />
+
         <ul className="nav-menu">
           <li className="nav-item">
-            <Link to="/services" className="nav-link">Browse Services</Link>
+            <Link to="/services" className="nav-link">Services</Link>
           </li>
           <li className="nav-item">
-            <Link to="/ride-pooling" className="nav-link">Ride Pooling</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/marketplace" className="nav-link">Marketplace</Link>
+            <Link to="/marketplace" className="nav-link">Market</Link>
           </li>
           <li className="nav-item">
             <Link to="/rentals" className="nav-link">Rentals</Link>
           </li>
           <li className="nav-item">
-            <Link to="/college-zone" className="nav-link">College Zone</Link>
+            <Link to="/ride-pooling" className="nav-link">Rides</Link>
           </li>
           <li className="nav-item">
-            <Link to="/feed" className="nav-link">OnTap Feed</Link>
+            <Link to="/mindwave" className="nav-link nav-link-highlight">MindWave</Link>
           </li>
-          <li className="nav-item">
-            <Link to="/student-tools" className="nav-link">Student Tools</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/mindwave" className="nav-link mindwave-link">🧠 MindWave AI</Link>
-          </li>
+
           {user ? (
             <>
               <li className="nav-item">
                 <Link to="/dashboard" className="nav-link">Dashboard</Link>
               </li>
-              <li className="nav-item">
-                <Link to="/create-service" className="nav-link">Offer Service</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/my-bookings" className="nav-link">My Bookings</Link>
-              </li>
-              <li className="nav-item">
-                <span className="nav-user">Hi, {user.name}</span>
-              </li>
-              <li className="nav-item">
-                <button onClick={onLogout} className="nav-btn">Logout</button>
+              <li className="nav-item nav-user-item">
+                <div className="nav-user-avatar">
+                  {user.name?.charAt(0).toUpperCase()}
+                </div>
+                <button onClick={onLogout} className="nav-btn-text">Logout</button>
               </li>
             </>
           ) : (
@@ -60,7 +46,7 @@ function Navbar({ user, onLogout }) {
                 <Link to="/login" className="nav-link">Login</Link>
               </li>
               <li className="nav-item">
-                <Link to="/register" className="nav-btn">Sign Up</Link>
+                <Link to="/register" className="btn btn-primary btn-sm">Sign Up</Link>
               </li>
             </>
           )}

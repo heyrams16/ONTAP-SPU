@@ -12,7 +12,12 @@
       "Bash(node seedServices.js:*)",
       "Bash(node:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nComplete ONTAP-SPU platform with MindWave AI integration\n\nFeatures:\n- Student marketplace and rentals\n- MindWave AI tools (Study Assistant, Wellness Coach, Smart Campus)\n- Live proxy data services with real-time updates\n- ATS Resume Optimizer and Auto Apply tools\n- Mobile-responsive UI with PWA support\n- MongoDB backend with seeded data\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "WebFetch(domain:www.careem.com)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []
